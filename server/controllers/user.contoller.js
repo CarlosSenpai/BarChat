@@ -134,7 +134,26 @@ module.exports = {
         console.log('Error in getting user', err);
         res.status(400).json({err});
     }
-    }
+    },
+
+    // setLocation: (req, res) => {
+    //     User.find({
+    //         location: {
+    //             $near: {
+    //                 $maxDistance: 1000,
+    //                 $geometry: {
+    //                     type: "Point",
+    //                     coordinates: [long, latt]
+    //                 }
+    //             }
+    //         }
+    //     }).find( (error, res) => {
+    //         if(error) {
+    //             console.log(error);
+    //             console.log(JSON.stringify(res, 0, 2));
+    //         }
+    //     })
+    // }
 };
 
 

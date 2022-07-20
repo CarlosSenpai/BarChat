@@ -41,7 +41,11 @@ const UserSchema = new mongoose.Schema({
         type: String,
         
     }
-    
+
+    // location: {
+    //     type: { type: String },
+    //     coordinates: []
+    // }
 }, {timestamps: true});
 
 //Virtual field
@@ -73,6 +77,7 @@ UserSchema.pre("save", function(next) {
         })
 })
 
+UserSchema.index({location: "2dsphere"});
 
 const User = mongoose.model("User", UserSchema);
 

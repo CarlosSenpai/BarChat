@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
-import { isPointWithinRadius } from 'geolib';
 import useGeoLocation from '../components/useGeoLocation';
 import NavBar from '../components/NavBar';
 
 
 
 const Discover = () => {
+
+    const geolib = require('geolib');
 
     
     const location = useGeoLocation();
@@ -28,18 +29,32 @@ const Discover = () => {
             .catch( (err) => console.log(err))
     }, [])
 
-    isPointWithinRadius(
-            { lat: 51.525, lng: 7.4575 },
-            { lat: 51.5175, lng: 7.4678 },
-            5000
-        )
+    // useEffect( () => {
+    //     axios.post(`http://localhost:8000/api/user/location`)
+    //         .then( res => {})
+    // })
 
-function check() {
-if (isPointWithinRadius() === true) {
-    console.log("Hey");
-} else {
-    console.log("No Hey");
-}}
+    const shareLocation = (event) => {
+        axios.post(`http://localhost:8000/api/user/location`)
+        .then((res) => {
+            console.log(res, "res");
+            console.log(res.data, "is res data!");
+        })
+        .catch( (err) => {
+            console.log(err.response.data);
+        });
+    };
+
+    function check() {
+    if (geolib.isPointWithinRadius({ latitude: location.coordinates.lat, longitude: location.coordinates.lng },
+        { latitude: 51.5175, longitude: 7.4678 },
+        5000) === true) {
+        console.log("Hey");
+    } else {
+        console.log("No Hey");
+    }
+    
+}
 
     return (
         <>
@@ -48,8 +63,10 @@ if (isPointWithinRadius() === true) {
         { 
         location.loaded ? JSON.stringify(location) : "Location data not available yet"
         }
-
+        <br/>
         <button onClick={check}>Near me?</button>
+
+        <button onClick={shareLocation}>Save Location</button>
 
     </>
     )

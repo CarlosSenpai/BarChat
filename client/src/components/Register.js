@@ -37,7 +37,7 @@ const Register = (props) => {
                 email: "",
                 gender: "",
                 password: "",
-                confirmPassword: ""
+                confirmPassword: "",
             })
             setConfirmReg("Thank you for Registering, you can now log in");
         })
